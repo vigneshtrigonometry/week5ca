@@ -39,7 +39,8 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Delivery.findByName", query = "SELECT d FROM Delivery d WHERE d.name = :name")
     , @NamedQuery(name = "Delivery.findByAddress", query = "SELECT d FROM Delivery d WHERE d.address = :address")
     , @NamedQuery(name = "Delivery.findByPhone", query = "SELECT d FROM Delivery d WHERE d.phone = :phone")
-    , @NamedQuery(name = "Delivery.findByCreateDate", query = "SELECT d FROM Delivery d WHERE d.createDate = :createDate")})
+    , @NamedQuery(name = "Delivery.findByCreateDate", query = "SELECT d FROM Delivery d WHERE d.createDate = :createDate")
+    , @NamedQuery(name = "Delivery.findPodId" , query = "SELECT p.podId FROM Delivery d JOIN d.pod p WHERE d.pkgId = :pkgId")})
 public class Delivery implements Serializable {
 
     private static final long serialVersionUID = 1L;
