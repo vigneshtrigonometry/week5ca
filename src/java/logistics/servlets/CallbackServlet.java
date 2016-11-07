@@ -8,6 +8,7 @@ package logistics.servlets;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.ejb.EJB;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -35,9 +36,7 @@ public class CallbackServlet extends HttpServlet {
             podBean.update(Integer.parseInt(podId), ackId);
             resp.setStatus(HttpServletResponse.SC_CREATED);
             resp.setContentType("text/html");
-            PrintWriter out = resp.getWriter();
-            out.println("<html><body>POD with ID: " + podId + " update with AckID :" + ackId + "</body></html>");
-            out.flush();
+            req.getRequestDispatcher("/faces/deliveryandpods.xhtml?faces-redirect=true").forward(req, resp);
         } catch(Exception e){
             e.printStackTrace();
         }

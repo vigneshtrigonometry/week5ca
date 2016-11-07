@@ -33,14 +33,14 @@ public class deliveryandpodsView {
     @EJB
     private PODBean podBean;
     
-    @PostConstruct
-    void init(){
-        podList = new LinkedList<>();
-        podList = podBean.getAllPods();
-        
-        deliveryList = new LinkedList<>();
-        deliveryList = delBean.getDeliveryItems();
-    }
+//    @PostConstruct
+//    void init(){
+//        podList = new LinkedList<>();
+//        podList = podBean.getAllPods();
+//        
+//        deliveryList = new LinkedList<>();
+//        deliveryList = delBean.getDeliveryItems();
+//    }
 
     public List<Pod> getPodList() {
         return podList;
