@@ -10,6 +10,7 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.validation.ConstraintViolationException;
 import logistics.entity.Delivery;
 import logistics.entity.Pod;
 
@@ -35,10 +36,16 @@ public class DeliveryBean {
             del.setCreateDate(new Date());
             Pod p = new Pod();
             p.setPkgId(del);
+            p.setDeliveryDate(new Date());
             em.persist(del);
             em.persist(p);
 
-        } catch (Exception e) {
+        } 
+        catch(ConstraintViolationException ex)
+        {
+            System.out.println(ex.getConstraintViolations().toString());
+        }
+        catch (Exception e) {
 
             System.out.println("Error in DeliveryBean");
             e.printStackTrace();
