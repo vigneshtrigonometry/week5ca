@@ -6,11 +6,14 @@
 package logistics.servlets;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import logistics.business.PODBean;
 
 /**
  *
@@ -19,9 +22,27 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/callback")
 public class CallbackServlet extends HttpServlet {
     
+    @EJB
+    private PODBean podBean;
+            
     @Override
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException
     {
+        String podId = req.getParameter("podId");
+        String ackId = req.getParameter("ackId");
+        
+        try{
+            podBean.update(Integer.parseInt(podId), ackId);
+            resp.setStatus(HttpServletResponse.SC_CREATED);
+            resp.setContentType("text/html");
+            PrintWriter out = resp.getWriter();
+            out.println("<html><body>POD with ID: " + podId + " update with AckID :" + ackId + "</body></html>");
+            out.flush();
+        } catch(Exception e){
+            e.printStackTrace();
+        }
+        
+        
         
     }
     

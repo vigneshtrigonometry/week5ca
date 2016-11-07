@@ -35,4 +35,11 @@ public class PODBean {
         em.merge(p);
     }
     
+    public void update (int podId, String ackId){
+        Pod p = em.find(Pod.class, podId);
+        p.setAckId(ackId);
+        em.merge(p);
+        
+    }
+    
 }
