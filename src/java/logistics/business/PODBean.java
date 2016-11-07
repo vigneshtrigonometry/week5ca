@@ -5,6 +5,7 @@
  */
 package logistics.business;
 
+import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -23,6 +24,15 @@ public class PODBean {
     public List<Pod> getAllPods()
     {
         return em.createNamedQuery("Pod.findAll", Pod.class).getResultList();
+    }
+    
+    public void update(int podId, Date d, String note, byte[] image)
+    {
+        Pod p = em.find(Pod.class, podId);
+        p.setDeliveryDate(d);
+        p.setImage(image);
+        p.setNote(note);
+        em.merge(p);
     }
     
 }
