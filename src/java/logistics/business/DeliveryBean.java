@@ -55,7 +55,15 @@ public class DeliveryBean {
 
     //gets the list of items from the delivery table and returns it as a list
     public List<Delivery> getDeliveryItems() {
-        return em.createNamedQuery("Delivery.findAll", Delivery.class).getResultList();
+        try
+        {
+            return em.createNamedQuery("Delivery.findAll", Delivery.class).getResultList();
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+            return null;
+        }
     }
 
 }

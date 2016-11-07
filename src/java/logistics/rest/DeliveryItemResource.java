@@ -5,7 +5,6 @@
  */
 package logistics.rest;
 
-import java.math.BigDecimal;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
@@ -15,10 +14,11 @@ import javax.json.JsonObjectBuilder;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import logistics.business.DeliveryBean;
+import logistics.business.PODBean;
 import logistics.entity.Delivery;
+import logistics.entity.Pod;
 
 /**
  *
@@ -27,25 +27,35 @@ import logistics.entity.Delivery;
 @RequestScoped
 @Path("/items")
 public class DeliveryItemResource {
-    @EJB private DeliveryBean mgr;
-    
+
+    @EJB
+    private DeliveryBean mgr;
+    @EJB
+    private PODBean pmgr;
+
     @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getItems()
-    {
-        JsonArrayBuilder arrBuilder = Json.createArrayBuilder();
-        
-        List<Delivery> deliveries = mgr.getDeliveryItems();
-        for(Delivery d:deliveries)
-        {
-            JsonObjectBuilder objBuilder = Json.createObjectBuilder();
-            objBuilder.add("teamId","40b66c20");
-            objBuilder.add("podId", d.getPod().getPodId());
-            objBuilder.add("name", d.getName());
-            objBuilder.add("address", d.getAddress());
-            objBuilder.add("name", d.getPhone());
-            arrBuilder.add(objBuilder);
+    @Produces("application/json")
+    public Response getItems() {
+        try {
+            JsonArrayBuilder arrBuilder = Json.createArrayBuilder();
+
+            List<Pod> pods = pmgr.getAllPods();
+            for (Pod p : pods) {
+                JsonObjectBuilder objBuilder = Json.createObjectBuilder();
+                objBuilder.add("teamId", "40b66c20");
+                objBuilder.add("podId", p.getPodId());
+                objBuilder.add("name", p.getPkg().getName());
+                objBuilder.add("address", p.getPkg().getAddress());
+                objBuilder.add("name", p.getPkg().getPhone());
+                arrBuilder.add(objBuilder);
+            }
+            return Response.ok(arrBuilder.build()).build();
         }
-        return Response.ok(arrBuilder.build()).build();
+        catch(Exception e)
+        {
+            e.printStackTrace();
+            return Response.status(Response.Status.SERVICE_UNAVAILABLE).build();
+        }
+
     }
 }
