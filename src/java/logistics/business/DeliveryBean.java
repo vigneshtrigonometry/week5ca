@@ -11,6 +11,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import logistics.entity.Delivery;
+import logistics.entity.Pod;
 
 /**
  *
@@ -18,34 +19,36 @@ import logistics.entity.Delivery;
  */
 @Stateless
 public class DeliveryBean {
-    
-    @PersistenceContext EntityManager em;
+
+    @PersistenceContext
+    EntityManager em;
 
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
-
     public void AddDelivery(String name, String address, String phone) {
-        
-        try{
-        Delivery del = new Delivery();
-        del.setName(name);
-        del.setAddress(address);
-        del.setPhone(phone);
-        del.setCreateDate(new Date());
-        em.persist(del);
-        } catch(Exception e){
-        
+
+        try {
+            Delivery del = new Delivery();
+            del.setName(name);
+            del.setAddress(address);
+            del.setPhone(phone);
+            del.setCreateDate(new Date());
+            Pod p = new Pod();
+            p.setPkgId(del);
+            em.persist(del);
+            em.persist(p);
+
+        } catch (Exception e) {
+
             System.out.println("Error in DeliveryBean");
             e.printStackTrace();
         }
-        
+
     }
-    
-    
+
     //gets the list of items from the delivery table and returns it as a list
-    
-    public List<Delivery> getDeliveryItems()
-    {
+    public List<Delivery> getDeliveryItems() {
         return em.createNamedQuery("Delivery.findAll", Delivery.class).getResultList();
     }
+
 }

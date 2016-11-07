@@ -17,7 +17,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -69,8 +69,8 @@ public class Delivery implements Serializable {
     @Column(name = "create_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createDate;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "pkgId")
-    private Collection<Pod> podCollection;
+    @OneToOne(mappedBy = "pkg")
+    private Pod pod;
 
     public Delivery() {
     }
@@ -128,12 +128,12 @@ public class Delivery implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Pod> getPodCollection() {
-        return podCollection;
+    public Pod getPod() {
+        return pod;
     }
 
-    public void setPodCollection(Collection<Pod> podCollection) {
-        this.podCollection = podCollection;
+    public void setPod(Pod pod) {
+        this.pod = pod;
     }
 
     @Override
