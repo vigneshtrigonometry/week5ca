@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+    <h:head>
+        <title>Enter the Delivery Details</title>
+    </h:head>
+    <h:body>
+        <h2>Please enter the delivery details</h2><br/>
+        <h:form>
+            <h:panelGrid columns="2">
+                Name: <h:inputText value="#{enterDetailsView.name}"/>
+                Address: <h:inputText value="#{enterDetailsView.address}"/>
+                Phone no.: <h:inputText value="#{enterDetailsView.phone}"/><h:panelGroup/>
+                <h:commandButton value="Add for delivery" action="#{enterDetailsView.addToDelivery()}"/>
+            </h:panelGrid>
+        </h:form>
+        
+    </h:body>
+</html>
+

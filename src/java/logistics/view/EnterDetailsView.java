@@ -6,12 +6,16 @@
 package logistics.view;
 
 import javax.ejb.EJB;
+import javax.enterprise.context.RequestScoped;
+import javax.inject.Named;
 import logistics.business.DeliveryBean;
 
 /**
  *
  * @author urquhart
  */
+@RequestScoped
+@Named
 public class EnterDetailsView {
     
     @EJB DeliveryBean delBean;

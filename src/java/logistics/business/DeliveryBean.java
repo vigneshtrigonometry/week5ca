@@ -5,6 +5,8 @@
  */
 package logistics.business;
 
+import java.util.Date;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -29,6 +31,7 @@ public class DeliveryBean {
         del.setName(name);
         del.setAddress(address);
         del.setPhone(phone);
+        del.setCreateDate(new Date());
         em.persist(del);
         } catch(Exception e){
         
@@ -36,5 +39,13 @@ public class DeliveryBean {
             e.printStackTrace();
         }
         
+    }
+    
+    
+    //gets the list of items from the delivery table and returns it as a list
+    
+    public List<Delivery> getDeliveryItems()
+    {
+        return em.createNamedQuery("Delivery.findAll", Delivery.class).getResultList();
     }
 }
